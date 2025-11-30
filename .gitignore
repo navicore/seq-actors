@@ -1,0 +1,34 @@
+# Rust
+/target/
+claude.md
+**/*.rs.bk
+*.pdb
+output
+# LLVM IR output
+*.ll
+*.bc
+*.o
+
+# Compiled binaries (build to target/ or tmp/ only)
+# Never pollute root directory with test binaries!
+/test_*
+/test-*
+!tests/
+
+# IDE
+.vscode/
+.idea/
+.claude/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# Runtime artifacts
+libseq_runtime.a
+
+# Temporary test artifacts
+/tmp/
+*.txt
