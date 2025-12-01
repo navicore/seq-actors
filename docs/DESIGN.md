@@ -259,11 +259,11 @@ supervisor-start ( Strategy Children -- SupervisorId )
 
 ## Questions for Discussion
 
-1. **Persistence**: File-per-actor vs SQLite vs hybrid?
+1. ~~**Persistence**: File-per-actor vs SQLite vs hybrid?~~ ✓ **DECIDED: File-per-actor** (can add SQLite later if needed)
 2. ~~**Serialization**: JSON with string-converted keys acceptable?~~ ✓ **DECIDED: bincode**
 3. ~~**Quotations in state**: Error, or store as reference?~~ ✓ **DECIDED: Error** (state is data, behavior is code)
-4. **Supervision**: Declarative config or Seq code?
-5. **Addressing**: UUIDs only, or path-based from start?
+4. ~~**Supervision**: Declarative config or Seq code?~~ ✓ **DECIDED: one-for-one default** (expand later)
+5. ~~**Addressing**: UUIDs only, or path-based from start?~~ ✓ **DECIDED: UUIDs** (path-based can come later)
 
 ---
 
