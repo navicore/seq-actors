@@ -6,6 +6,8 @@
 //! - Behavior (a Seq Quotation)
 //! - Journal (for event persistence)
 
+use crate::serialize::TypedValue;
+use std::collections::BTreeMap;
 use uuid::Uuid;
 
 /// Unique identifier for an actor
@@ -62,9 +64,8 @@ pub struct Actor {
     /// Unique identifier
     pub id: ActorId,
 
-    /// Current state (a Seq Map value, serialized as JSON internally)
-    /// TODO: Replace with actual seq_runtime::Value once we integrate
-    pub state: serde_json::Value,
+    /// Current state (a TypedValue, typically a Map)
+    pub state: TypedValue,
 
     /// Behavior quotation reference
     /// This is the name/id of the quotation that handles messages
@@ -79,7 +80,7 @@ impl Actor {
     pub fn new(behavior: String) -> Self {
         Actor {
             id: ActorId::new(),
-            state: serde_json::json!({}),
+            state: TypedValue::Map(BTreeMap::new()),
             behavior,
             sequence: 0,
         }
@@ -89,9 +90,19 @@ impl Actor {
     pub fn with_id(id: ActorId, behavior: String) -> Self {
         Actor {
             id,
-            state: serde_json::json!({}),
+            state: TypedValue::Map(BTreeMap::new()),
             behavior,
             sequence: 0,
+        }
+    }
+
+    /// Create an actor with existing state (for recovery)
+    pub fn with_state(id: ActorId, behavior: String, state: TypedValue, sequence: u64) -> Self {
+        Actor {
+            id,
+            state,
+            behavior,
+            sequence,
         }
     }
 
@@ -119,6 +130,7 @@ mod tests {
         let actor = Actor::new("my-behavior".to_string());
         assert_eq!(actor.behavior, "my-behavior");
         assert_eq!(actor.sequence, 0);
+        assert!(matches!(actor.state, TypedValue::Map(_)));
     }
 
     #[test]

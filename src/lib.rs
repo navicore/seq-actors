@@ -32,11 +32,16 @@
 
 pub mod actor;
 pub mod builtins;
+pub mod ffi;
 pub mod journal;
+pub mod runtime;
 pub mod serialize;
 
 // Re-exports
 pub use actor::{Actor, ActorId, ActorRef};
 pub use builtins::compiler_config;
 pub use journal::{Event, Journal, Snapshot};
-pub use serialize::{MapKey, SerializeError, TypedValue};
+pub use runtime::{ActorRuntime, Mailbox, RuntimeConfig};
+
+// Serialization re-exports from seq-runtime
+pub use serialize::{MapKey, SerializeError, TypedMapKey, TypedValue, ValueSerialize};
